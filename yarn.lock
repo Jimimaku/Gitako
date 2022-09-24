@@ -9767,10 +9767,10 @@ pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
-pjax-api@^3.33.0:
-  version "3.33.0"
-  resolved "https://registry.yarnpkg.com/pjax-api/-/pjax-api-3.33.0.tgz#90e1c4d725b51d7efe17514a534f5329dfc2b15e"
-  integrity sha512-E0o1NNa2ebOeKICq5efWcc9Od6CtKC1jiUPl4MWpNEuAOpEQ3381TQq8/nSyw4+biqBK5JQdb6+i0wVGhIHnJQ==
+pjax-api@^3.35.3:
+  version "3.36.1"
+  resolved "https://registry.yarnpkg.com/pjax-api/-/pjax-api-3.36.1.tgz#ccb068132f006b5ad47bcd369dbd0b99914d23b7"
+  integrity sha512-f0alTp2bqOx7GRXdCwIvnb7s/MNJ25xMZnqjklMWyXJaULXeCb0RC4V41pVkVd8VUVb7IQG59OmCvM7mZluNeQ==
 
 pkg-dir@4.2.0, pkg-dir@^4.1.0, pkg-dir@^4.2.0:
   version "4.2.0"
