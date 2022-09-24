@@ -22,7 +22,7 @@
     "test:non-parallel": "NODE_ENV=test jest --config __tests__/jest.non-parallel.config.js"
   },
   "dependencies": {
-    "@primer/css": "^20.4.3",
+    "@primer/css": "^20.4.4",
     "@primer/octicons-react": "^17.4.1",
     "@primer/react": "^35.8.0",
     "@sentry/browser": "^6.3.6",
