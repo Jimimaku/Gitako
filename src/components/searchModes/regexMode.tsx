@@ -1,8 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { cx } from 'utils/cx'
 import { searchKeyToRegexp } from 'utils/general'
 import { ModeShape } from '.'
 import { Highlight } from '../Highlight'
+
+export const getIsSupportedRegex = (source: string) => !source.match(/\?:|\?=|\?!|\?<=|\?<!/)
 
 export const regexMode: ModeShape = {
   getSearchParams(searchKey) {

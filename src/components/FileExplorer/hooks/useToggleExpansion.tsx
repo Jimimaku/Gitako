@@ -1,8 +1,8 @@
-import * as React from 'react'
+import { useCallback } from 'react'
 import { VisibleNodesGenerator } from 'utils/VisibleNodesGenerator'
 
 export function useToggleExpansion(visibleNodesGenerator: VisibleNodesGenerator) {
-  return React.useCallback(
+  return useCallback(
     async (
       node: TreeNode,
       {

@@ -1,5 +1,5 @@
 import { SidebarContext } from 'components/SidebarContext'
-import * as React from 'react'
+import React, { useCallback, useContext } from 'react'
 import * as DOMHelper from 'utils/DOMHelper'
 import { OperatingSystems, os } from 'utils/general'
 import { loadWithFastRedirect } from 'utils/hooks/useFastRedirect'
@@ -32,9 +32,9 @@ export function useHandleKeyDown(
   searched: boolean,
   setAlignMode: (mode: AlignMode) => void,
 ) {
-  const { pendingFocusTarget } = React.useContext(SidebarContext)
+  const { pendingFocusTarget } = useContext(SidebarContext)
   const setPendingFocusTarget = pendingFocusTarget.onChange
-  return React.useCallback(
+  return useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
       const { nodes, focusedNode, expandedNodes } = visibleNodes
 

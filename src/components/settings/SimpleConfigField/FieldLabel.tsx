@@ -1,6 +1,6 @@
 import { InfoIcon, LinkExternalIcon } from '@primer/octicons-react'
 import { Box } from '@primer/react'
-import * as React from 'react'
+import React from 'react'
 import { ConfigKeys } from 'utils/config/helper'
 import { SimpleConfigField } from '.'
 

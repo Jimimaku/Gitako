@@ -3,10 +3,18 @@ import { useFocusOnPendingTarget } from 'components/FocusTarget'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { SearchBar } from 'components/SearchBar'
 import { useConfigs } from 'containers/ConfigsContext'
+import { useInspector } from 'containers/Inspector'
 import { PortalContext } from 'containers/PortalContext'
 import { RepoContext } from 'containers/RepoContext'
-import { useInspector } from 'containers/Inspector'
-import * as React from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { usePrevious, useUpdateEffect } from 'react-use'
 import { cx } from 'utils/cx'
 import { run } from 'utils/general'
@@ -46,7 +54,7 @@ export type NodeRendererContext = {
 }
 
 export function FileExplorer() {
-  const metaData = React.useContext(RepoContext)
+  const metaData = useContext(RepoContext)
   const visibleNodesGenerator = useVisibleNodesGenerator(metaData)
   const visibleNodes = useVisibleNodes(visibleNodesGenerator)
   const state = useLoadedContext(SideBarStateContext).value
@@ -88,7 +96,7 @@ function LoadedFileExplorer({
 }) {
   const config = useConfigs().value
 
-  const [searchKey, updateSearchKey] = React.useState('')
+  const [searchKey, updateSearchKey] = useState('')
   const searched = !!searchKey
   const onSearch = useOnSearch(updateSearchKey, visibleNodesGenerator)
   const { focusedNode, nodes, expandedNodes, depths, loading } = visibleNodes
@@ -117,8 +125,8 @@ function LoadedFileExplorer({
     overScan: 10,
   })
 
-  const portalName = React.useMemo(() => `${Math.random()}`, [])
-  React.useEffect(() => {
+  const portalName = useMemo(() => `${Math.random()}`, [])
+  useEffect(() => {
     const current = scrollElementRef.current
     if (current) registerPortalRoot(current, portalName)
   }, [scrollElementRef, portalName])
@@ -133,18 +141,18 @@ function LoadedFileExplorer({
   //   - "lazy"
   // - navigate with keyboard
   //   - "lazy"
-  const [alignMode, setAlignMode] = React.useState<AlignMode>('top')
+  const [alignMode, setAlignMode] = useState<AlignMode>('top')
 
-  const index = React.useMemo(
+  const index = useMemo(
     () => (focusedNode?.path ? nodes.findIndex(node => node.path === focusedNode.path) : -1),
     [focusedNode?.path, nodes],
   )
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (index !== -1) scrollToItem(index, alignMode)
   }, [index, scrollToItem, alignMode])
   const prevSearchKey = usePrevious(searchKey)
-  React.useEffect(() => {
+  useEffect(() => {
     // when start searching or stop searching
     if (!prevSearchKey !== !searchKey) scrollToItem(0, alignMode)
   }, [prevSearchKey, searchKey, scrollToItem, alignMode])
@@ -170,7 +178,7 @@ function LoadedFileExplorer({
   ])
   const renderLabelText = useRenderLabelText(searchKey)
 
-  const goToCurrentItem = React.useCallback(() => {
+  const goToCurrentItem = useCallback(() => {
     const targetPath = getCurrentPath()
     if (targetPath) expandTo(targetPath)
   }, [getCurrentPath, expandTo])
@@ -178,14 +186,14 @@ function LoadedFileExplorer({
   useOnLocationChange(goToCurrentItem)
   useAfterRedirect(goToCurrentItem)
 
-  const [currentPath, setCurrentPath] = React.useState(() => getCurrentPath())
-  useAfterRedirect(React.useCallback(() => setCurrentPath(getCurrentPath()), [getCurrentPath]))
+  const [currentPath, setCurrentPath] = useState(() => getCurrentPath())
+  useAfterRedirect(useCallback(() => setCurrentPath(getCurrentPath()), [getCurrentPath]))
   useInspector('CurrentPath', currentPath)
 
-  const ref = React.useRef<HTMLDivElement | null>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   useFocusOnPendingTarget(
     'files',
-    React.useCallback(() => ref.current?.focus(), []),
+    useCallback(() => ref.current?.focus(), []),
   )
 
   return (

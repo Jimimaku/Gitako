@@ -1,13 +1,13 @@
-import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as features from 'utils/features'
 import { Size2D } from '../../components/Size'
 
 export function useElementSize<E extends HTMLElement>() {
-  const ref = React.useRef<E | null>(null)
+  const ref = useRef<E | null>(null)
 
-  const [size, setSize] = React.useState<Size2D>([0, 0])
+  const [size, setSize] = useState<Size2D>([0, 0])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       if (features.resize) {
         const observer = new window.ResizeObserver(entries => {

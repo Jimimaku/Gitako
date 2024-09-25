@@ -169,9 +169,9 @@ export const GitHub: Platform = {
   },
   shouldExpandSideBar() {
     return Boolean(
-      (DOMHelper.isInCodePage() && !DOMHelper.isNativePRFileTreeShown()) ||
-        URLHelper.isInCommitPage() ||
-        (URLHelper.isInPullPage() && !DOMHelper.isNativePRFileTreeShown()),
+      (DOMHelper.isInCodePage() || URLHelper.isInCommitPage() || URLHelper.isInPullPage()) &&
+        !DOMHelper.isNativeFileTreeShown() &&
+        !DOMHelper.isNativePRFileTreeShown(),
     )
   },
   shouldExpandAll() {

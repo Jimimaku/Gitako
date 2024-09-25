@@ -4,6 +4,7 @@
 
 import { platformName } from 'platforms'
 import { $ } from './$'
+import { Config } from './config/helper'
 
 export const rootElementID = 'gitako-root'
 export const gitakoDescriptionTarget = document.documentElement
@@ -82,10 +83,19 @@ export function markGitakoPlatform() {
 const spacingAttributeName = 'data-with-gitako-spacing'
 export const attachStickyBodyIndent = () =>
   attachStickyDataAttribute(gitakoDescriptionTarget, spacingAttributeName, ({ oldValue }) =>
-    setBodyIndent(oldValue === 'true'),
+    setBodyIndent(
+      (oldValue &&
+        (
+          {
+            left: 'left',
+            right: 'right',
+          } as const
+        )[oldValue]) ||
+        'left',
+    ),
   )
-export function setBodyIndent(shouldShowGitako: boolean) {
-  gitakoDescriptionTarget.setAttribute(spacingAttributeName, `${shouldShowGitako}`)
+export function setBodyIndent(placement: Config['sidebarPlacement'] | false) {
+  gitakoDescriptionTarget.setAttribute(spacingAttributeName, `${placement}`)
 }
 
 /**

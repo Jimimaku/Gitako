@@ -3,7 +3,7 @@
   "include": ["."],
   "exclude": ["tsconfig.json"],
   "compilerOptions": {
-    "target": "ES3",
+    "target": "ES5",
     "module": "CommonJS",
     "baseUrl": null
   }

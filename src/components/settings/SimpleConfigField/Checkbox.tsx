@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { ConfigKeys } from 'utils/config/helper'
 import { SimpleConfigFieldProps, useSimpleConfigFieldIO } from '.'
 import { Checkbox } from '../../Inputs/Checkbox'

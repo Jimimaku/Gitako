@@ -1,5 +1,5 @@
 import { FormControl, Select, SelectProps } from '@primer/react'
-import * as React from 'react'
+import React from 'react'
 
 export type Option<T> = {
   key: string

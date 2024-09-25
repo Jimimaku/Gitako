@@ -1,5 +1,5 @@
 import { useConfigs } from 'containers/ConfigsContext'
-import React from 'react'
+import { useCallback, useMemo } from 'react'
 import { Config, ConfigKeys } from 'utils/config/helper'
 
 export type SimpleConfigField<Key extends ConfigKeys> = {
@@ -26,8 +26,8 @@ export function useSimpleConfigFieldIO<Key extends ConfigKeys>(
   const value = configContext.value[field.key]
 
   return {
-    value: React.useMemo(() => (overwrite ? overwrite.value(value) : value), [overwrite, value]),
-    onChange: React.useCallback(
+    value: useMemo(() => (overwrite ? overwrite.value(value) : value), [overwrite, value]),
+    onChange: useCallback(
       (newValue: Config[Key]) => {
         configContext.onChange({ [field.key]: overwrite ? overwrite.onChange(newValue) : newValue })
       },

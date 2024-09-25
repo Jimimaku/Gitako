@@ -1,16 +1,16 @@
 import { platform } from 'platforms'
-import * as React from 'react'
+import { useCallback, useEffect } from 'react'
 import { useAfterRedirect } from 'utils/hooks/useFastRedirect'
 import * as DOMHelper from '../DOMHelper'
 import { GitHub } from '../index'
 
 export function useGitHubAttachCopySnippetButton(copySnippetButton: boolean) {
-  const attachCopySnippetButton = React.useCallback(
+  const attachCopySnippetButton = useCallback(
     function attachCopySnippetButton() {
       if (platform === GitHub && copySnippetButton) DOMHelper.attachCopySnippet()
     },
     [copySnippetButton],
   )
-  React.useEffect(attachCopySnippetButton, [attachCopySnippetButton])
+  useEffect(attachCopySnippetButton, [attachCopySnippetButton])
   useAfterRedirect(attachCopySnippetButton)
 }

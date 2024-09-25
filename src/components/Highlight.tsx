@@ -1,7 +1,8 @@
-import * as React from 'react'
+import React, { useMemo } from 'react'
+import { getIsSupportedRegex } from './searchModes/regexMode'
 
 export const Highlight = function Highlight({ text, match }: { text: string; match?: RegExp }) {
-  const $match = React.useMemo(
+  const $match = useMemo(
     () =>
       match instanceof RegExp
         ? match.flags.includes('g')
@@ -11,7 +12,7 @@ export const Highlight = function Highlight({ text, match }: { text: string; mat
     [match],
   )
 
-  const chunks = React.useMemo(() => getChunks(text, $match), [text, $match])
+  const chunks = useMemo(() => getChunks(text, $match), [text, $match])
 
   return <>{chunks.map(([type, text], key) => React.createElement(type, { key }, text))}</>
 }
@@ -20,7 +21,8 @@ type ElementMeta = [tag: string, content: string]
 function getChunks(text: string, match: RegExp | null): ElementMeta[] {
   const contents: ElementMeta[] = []
 
-  if (match === null) {
+  const isSupportedMode = match && getIsSupportedRegex(match.source)
+  if (!isSupportedMode) {
     contents.push(['span', text])
     return contents
   }

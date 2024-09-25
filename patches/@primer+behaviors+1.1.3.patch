@@ -1,0 +1,23 @@
+diff --git a/node_modules/@primer/behaviors/dist/esm/anchored-position.js b/node_modules/@primer/behaviors/dist/esm/anchored-position.js
+index 3729dce..0f3cfc0 100644
+--- a/node_modules/@primer/behaviors/dist/esm/anchored-position.js
++++ b/node_modules/@primer/behaviors/dist/esm/anchored-position.js
+@@ -34,6 +34,9 @@ function getPositionedParent(element) {
+ function getClippingRect(element) {
+     let parentNode = element;
+     while (parentNode !== null) {
++        if (parentNode === document) {
++            break
++        }
+         if (parentNode === document.body) {
+             break;
+         }
+@@ -43,7 +46,7 @@ function getClippingRect(element) {
+         }
+         parentNode = parentNode.parentNode;
+     }
+-    const clippingNode = parentNode === document.body || !(parentNode instanceof HTMLElement) ? document.body : parentNode;
++    const clippingNode = parentNode === document ? document.documentElement : parentNode === document.body || !(parentNode instanceof HTMLElement) ? document.body : parentNode;
+     const elemRect = clippingNode.getBoundingClientRect();
+     const elemStyle = getComputedStyle(clippingNode);
+     const [borderTop, borderLeft, borderRight, borderBottom] = [

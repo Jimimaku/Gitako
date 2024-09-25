@@ -1,10 +1,10 @@
 import { useConfigs } from 'containers/ConfigsContext'
-import * as React from 'react'
+import { useCallback } from 'react'
 import { searchModes } from '../../searchModes'
 
 export function useRenderLabelText(searchKey: string) {
   const { searchMode } = useConfigs().value
-  return React.useCallback(
+  return useCallback(
     (node: TreeNode) => searchModes[searchMode].renderNodeLabelText(node, searchKey),
     [searchKey, searchMode],
   )

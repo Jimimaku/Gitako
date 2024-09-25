@@ -5,7 +5,7 @@ import { SideBarStateContext } from 'containers/SideBarState'
 import { platform } from 'platforms'
 import { Gitea } from 'platforms/Gitea'
 import { Gitee } from 'platforms/Gitee'
-import * as React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IIFC } from 'react-iifc'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
 import { useStateIO } from 'utils/hooks/useStateIO'
@@ -17,19 +17,19 @@ export function AccessTokenSettings() {
   const configContext = useConfigs()
   const { accessToken } = configContext.value
   const hasAccessToken = Boolean(accessToken)
-  const [accessTokenInputValue, setAccessTokenInputValue] = React.useState('')
+  const [accessTokenInputValue, setAccessTokenInputValue] = useState('')
   const useAccessTokenHint = useStateIO<React.ReactNode>('')
   const focusInput = useStateIO(false)
   const sidebarState = useLoadedContext(SideBarStateContext).value
 
   const { value: accessTokenHint } = useAccessTokenHint
 
-  React.useEffect(() => {
+  useEffect(() => {
     // clear input when access token updates
     setAccessTokenInputValue('')
   }, [accessToken])
 
-  const saveToken = React.useCallback(
+  const saveToken = useCallback(
     async (
       hint: typeof useAccessTokenHint.value = (
         <span>
@@ -73,16 +73,16 @@ export function AccessTokenSettings() {
       ) : hasAccessToken ? (
         <IIFC>
           {() => {
-            const [showConfirmButton, setShowConfirmButton] = React.useState(false)
+            const [showConfirmButton, setShowConfirmButton] = useState(false)
             return (
               <Box>
                 {showConfirmButton ? (
                   <IIFC>
                     {() => {
-                      const [allowClear, setAllowClear] = React.useState(false)
+                      const [allowClear, setAllowClear] = useState(false)
                       const waitForSeconds = 3
                       const timePast = useTimePast(1000, waitForSeconds * 1000)
-                      React.useEffect(() => {
+                      useEffect(() => {
                         const timeout = setTimeout(() => setAllowClear(true), waitForSeconds * 1000)
                         return () => clearTimeout(timeout)
                       }, [])
@@ -168,8 +168,8 @@ export function AccessTokenSettings() {
 }
 
 function useTimePast(unit = 1000, max?: number) {
-  const [timePast, setTimePast] = React.useState(0)
-  React.useEffect(() => {
+  const [timePast, setTimePast] = useState(0)
+  useEffect(() => {
     const checkInterval = (unit / 10) >> 0 // 10x check times for better accuracy
     const start = Date.now()
     let memoLastValue = 0

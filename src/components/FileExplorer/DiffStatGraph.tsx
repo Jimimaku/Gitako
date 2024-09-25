@@ -5,7 +5,7 @@ import {
   DiffRemovedIcon,
   DiffRenamedIcon,
 } from '@primer/octicons-react'
-import * as React from 'react'
+import React from 'react'
 import { resolveDiffGraphMeta } from 'utils/general'
 import { Icon } from '../Icon'
 

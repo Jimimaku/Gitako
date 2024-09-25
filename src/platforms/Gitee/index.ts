@@ -1,7 +1,7 @@
 import { GITEE_OAUTH } from 'env'
 import { Base64 } from 'js-base64'
 import { errors, platform } from 'platforms'
-import * as React from 'react'
+import { useCallback, useEffect } from 'react'
 import { resolveGitModules } from 'utils/gitSubmodule'
 import { useAfterRedirect } from 'utils/hooks/useFastRedirect'
 import { useProgressBar } from 'utils/hooks/useProgressBar'
@@ -187,12 +187,12 @@ export const Gitee: Platform = {
 }
 
 export function useGiteeAttachCopySnippetButton(copySnippetButton: boolean) {
-  const attachCopySnippetButton = React.useCallback(
+  const attachCopySnippetButton = useCallback(
     function attachCopySnippetButton() {
       if (platform === Gitee && copySnippetButton) DOMHelper.attachCopySnippet()
     },
     [copySnippetButton],
   )
-  React.useEffect(attachCopySnippetButton, [attachCopySnippetButton])
+  useEffect(attachCopySnippetButton, [attachCopySnippetButton])
   useAfterRedirect(attachCopySnippetButton)
 }

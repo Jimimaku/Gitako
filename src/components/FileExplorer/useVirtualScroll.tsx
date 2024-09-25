@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useCallbackRef } from './useLatestValueRef'
 
 function memoize<Args extends AnyArray, R>(
@@ -29,14 +29,14 @@ export function useVirtualScroll<E extends HTMLElement>({
 }) {
   const totalHeight = totalAmount * rowHeight
 
-  const ref = React.useRef<E | null>(null) // TODO: compare DOM native event listener
-  const [scrollTop, setScrollTop] = React.useState(0)
+  const ref = useRef<E | null>(null) // TODO: compare DOM native event listener
+  const [scrollTop, setScrollTop] = useState(0)
 
-  const onScroll = React.useCallback((e: React.UIEvent<E, UIEvent>) => {
+  const onScroll = useCallback((e: React.UIEvent<E, UIEvent>) => {
     setScrollTop(e.currentTarget.scrollTop)
   }, [])
 
-  const [startRenderIndex, endRenderIndex] = React.useMemo(() => {
+  const [startRenderIndex, endRenderIndex] = useMemo(() => {
     const viewportLastItemOverflow = viewportHeight % rowHeight
     const visibleRowCount = (viewportHeight - viewportLastItemOverflow) / rowHeight
     const inViewIndexFirst = (Math.min(scrollTop, totalHeight - viewportHeight) / rowHeight) >> 0
@@ -46,14 +46,14 @@ export function useVirtualScroll<E extends HTMLElement>({
     return [renderIndexFirst, renderIndexLast]
   }, [scrollTop, viewportHeight, overScan, rowHeight, totalAmount, totalHeight])
 
-  const indexes = React.useMemo(() => {
+  const indexes = useMemo(() => {
     const indexes: number[] = []
     let i = startRenderIndex
     while (i < endRenderIndex) indexes.push(i++)
     return indexes
   }, [startRenderIndex, endRenderIndex])
 
-  const mapStyles = React.useCallback(
+  const mapStyles = useCallback(
     (row: number): React.CSSProperties => ({
       position: 'absolute',
       top: 0,
@@ -63,9 +63,9 @@ export function useVirtualScroll<E extends HTMLElement>({
     }),
     [rowHeight],
   )
-  const memoizedStyler = React.useMemo(() => memoize(mapStyles, row => row), [mapStyles])
+  const memoizedStyler = useMemo(() => memoize(mapStyles, row => row), [mapStyles])
 
-  const visibleRows: { row: number; style: React.CSSProperties }[] = React.useMemo(
+  const visibleRows: { row: number; style: React.CSSProperties }[] = useMemo(
     () =>
       indexes.map(row => ({
         row,
@@ -74,7 +74,7 @@ export function useVirtualScroll<E extends HTMLElement>({
     [indexes, memoizedStyler],
   )
 
-  const containerStyle: React.CSSProperties = React.useMemo(
+  const containerStyle: React.CSSProperties = useMemo(
     () => ({
       height: totalHeight,
       position: 'relative',

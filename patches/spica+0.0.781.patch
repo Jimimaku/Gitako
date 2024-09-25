@@ -1,0 +1,24 @@
+diff --git a/node_modules/spica/type.ts b/node_modules/spica/type.ts
+index c11e7a7..969a841 100644
+--- a/node_modules/spica/type.ts
++++ b/node_modules/spica/type.ts
+@@ -1,4 +1,4 @@
+-import { isArray, toString, ObjectGetPrototypeOf } from './alias';
++import { ObjectGetPrototypeOf, isArray, toString } from './alias';
+ 
+ export type NonNull = {};
+ type Falsy = undefined | false | 0 | 0n | '' | null | void;
+@@ -238,9 +238,10 @@ export function type(value: unknown): string {
+     case 'function':
+       return 'Function';
+     case 'object':
+-      if (value === null) return 'null';
+-      assert(value = value as object);
+-      const tag: string = (value as object)[Symbol.toStringTag];
++      if (value === null || value === undefined) return 'null';
++      const tag: string = (value as {
++        [key in typeof Symbol.toStringTag]: string
++      })[Symbol.toStringTag];
+       if (tag) return tag;
+       switch (ObjectGetPrototypeOf(value)) {
+         case ArrayPrototype:

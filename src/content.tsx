@@ -1,5 +1,5 @@
 import { Gitako } from 'components/Gitako'
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import { createRoot } from 'react-dom/client'
 import { insertMountPoint, insertSideBarMountPoint } from 'utils/DOMHelper'
 import { useAfterRedirect } from 'utils/hooks/useFastRedirect'
@@ -15,7 +15,7 @@ async function init() {
   await injectStyles(browser.runtime.getURL('content.css'))
   const mountPoint = insertSideBarMountPoint()
   const MountPointWatcher = () => {
-    useAfterRedirect(React.useCallback(() => insertMountPoint(() => mountPoint), []))
+    useAfterRedirect(useCallback(() => insertMountPoint(() => mountPoint), []))
     return null
   }
 

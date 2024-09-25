@@ -1,6 +1,6 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 export function useConditionalHook<T>(condition: () => boolean, hook: () => T) {
-  const [use] = React.useState(condition)
+  const [use] = useState(condition)
   if (use) return hook()
 }

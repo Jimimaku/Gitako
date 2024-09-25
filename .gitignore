@@ -3,6 +3,7 @@
 node_modules
 tmp
 dist
+dist-firefox
 yarn-error.log
-vscode-icons
+/vscode-icons
 firefox-profile

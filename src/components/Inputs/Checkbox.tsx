@@ -1,5 +1,5 @@
-import { Checkbox as PrimerCheckbox, CheckboxProps, FormControl } from '@primer/react'
-import * as React from 'react'
+import { CheckboxProps, FormControl, Checkbox as PrimerCheckbox } from '@primer/react'
+import React from 'react'
 
 export function Checkbox({
   label,

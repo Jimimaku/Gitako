@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import { VisibleNodesGenerator } from 'utils/VisibleNodesGenerator'
 import { useExpandTo } from './useExpandTo'
 
@@ -7,7 +7,7 @@ export function useGoTo(
   updateSearchKey: React.Dispatch<React.SetStateAction<string>>,
   expandTo: ReturnType<typeof useExpandTo>,
 ) {
-  return React.useCallback(
+  return useCallback(
     (path: string[]) => {
       updateSearchKey('')
       visibleNodesGenerator.search(null)

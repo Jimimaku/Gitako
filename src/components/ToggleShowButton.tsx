@@ -3,7 +3,7 @@ import iconURL from 'assets/icons/Gitako.png'
 import { useConfigs } from 'containers/ConfigsContext'
 import { SideBarErrorContext } from 'containers/ErrorContext'
 import { ReloadContext } from 'containers/ReloadContext'
-import * as React from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useDebounce, useWindowSize } from 'react-use'
 import { cx } from 'utils/cx'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
@@ -23,14 +23,14 @@ function getSafeDistance(y: number, height: number) {
 }
 
 export function ToggleShowButton({ className, onClick, onHover }: Props) {
-  const reload = React.useContext(ReloadContext)
+  const reload = useContext(ReloadContext)
   const error = useLoadedContext(SideBarErrorContext).value
 
-  const ref = React.useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const config = useConfigs()
-  const [distance, setDistance] = React.useState(config.value.toggleButtonVerticalDistance)
+  const [distance, setDistance] = useState(config.value.toggleButtonVerticalDistance)
   const { height } = useWindowSize()
-  React.useEffect(() => {
+  useEffect(() => {
     // make sure it is inside viewport
     const safeDistance = getSafeDistance(distance, height)
     if (safeDistance !== distance) setDistance(safeDistance)
@@ -44,7 +44,7 @@ export function ToggleShowButton({ className, onClick, onHover }: Props) {
   )
 
   // reposition on window height change, but ignores distance change
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current) {
       ref.current.style.top = distance + 'px'
     }
@@ -63,8 +63,13 @@ export function ToggleShowButton({ className, onClick, onHover }: Props) {
     { onClick },
   )
 
+  const placement = config.value.sidebarPlacement
+
   return (
-    <div ref={ref} className={cx('gitako-toggle-show-button-wrapper', className)}>
+    <div
+      ref={ref}
+      className={cx('gitako-toggle-show-button-wrapper', `placement-${placement}`, className)}
+    >
       <button
         className={cx('gitako-toggle-show-button', {
           error,

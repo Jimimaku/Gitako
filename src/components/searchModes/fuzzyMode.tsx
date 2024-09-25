@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { cx } from 'utils/cx'
 import { hasUpperCase } from 'utils/general'
 import { ModeShape } from '.'

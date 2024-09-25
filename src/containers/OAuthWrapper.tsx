@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'common'
 import { useConfigs } from 'containers/ConfigsContext'
 import { platform } from 'platforms'
-import * as React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { parseURLSearch, run } from 'utils/general'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
 import { useStateIO } from 'utils/hooks/useStateIO'
@@ -15,8 +15,8 @@ export function OAuthWrapper({ children }: PropsWithChildren) {
   const running = useGetAccessToken()
   const $state = useLoadedContext(SideBarStateContext)
 
-  const needGetAccessTokenRef = React.useRef(running)
-  React.useEffect(() => {
+  const needGetAccessTokenRef = useRef(running)
+  useEffect(() => {
     if (needGetAccessTokenRef.current) {
       $state.onChange(running ? 'getting-access-token' : 'after-getting-access-token')
     }
@@ -31,7 +31,7 @@ function useGetAccessToken() {
   const $block = useStateIO(() => Boolean(getCodeSearchParam()))
   const configContext = useConfigs()
   const { accessToken } = configContext.value
-  React.useEffect(() => {
+  useEffect(() => {
     run(async function () {
       const code = getCodeSearchParam()
       if (code && !accessToken) {

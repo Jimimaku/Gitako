@@ -1,5 +1,5 @@
 import { storageHelper, storageKeys } from 'utils/storageHelper'
-import { version } from '../../../../package.json'
+import packageJson from '../../../../package.json'
 import { Storage } from '../../storageHelper'
 import { migration as v1v0v1 } from './1.0.1'
 import { migration as v1v3v4 } from './1.3.4'
@@ -21,7 +21,7 @@ export async function migrateConfig() {
     await migrate(version)
   }
 
-  await storageHelper.set({ [storageKeys.configVersion]: version })
+  await storageHelper.set({ [storageKeys.configVersion]: packageJson.version })
 }
 
 export async function onConfigOutdated<T extends JSONObject>(

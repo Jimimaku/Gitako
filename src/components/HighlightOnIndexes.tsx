@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 export function HighlightOnIndexes({ text, indexes = [] }: { text: string; indexes?: number[] }) {
   return (

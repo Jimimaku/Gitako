@@ -1,9 +1,9 @@
 import { IN_PRODUCTION_MODE } from 'env'
-import * as React from 'react'
+import { useEffect, useRef } from 'react'
 
 export function useUpdateReason<P extends Record<string, unknown>>(props: P) {
-  const lastPropsRef = React.useRef<P>(props)
-  React.useEffect(() => {
+  const lastPropsRef = useRef<P>(props)
+  useEffect(() => {
     if (IN_PRODUCTION_MODE) return
     const output: ([string, keyof P, P[keyof P]] | [string, keyof P, P[keyof P], P[keyof P]])[] = []
     for (const key of Object.keys(props)) {

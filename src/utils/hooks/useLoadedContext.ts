@@ -1,7 +1,7 @@
-import * as React from 'react'
+import React, { useContext } from 'react'
 
 export function useLoadedContext<T>(context: React.Context<T | null>): T {
-  const ctx = React.useContext(context)
+  const ctx = useContext(context)
   if (ctx === null) throw new Error(`Context not loaded`)
   return ctx
 }

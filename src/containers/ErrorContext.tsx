@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'common'
 import { useInspector } from 'containers/Inspector'
-import * as React from 'react'
+import React from 'react'
 import { useStateIO } from 'utils/hooks/useStateIO'
 
 export type SideBarErrorContextShape = IO<string | null>

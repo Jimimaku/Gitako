@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'common'
-import * as React from 'react'
+import React, { useMemo } from 'react'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
 import { useStateIO } from 'utils/hooks/useStateIO'
 import { SideBarErrorContext } from './ErrorContext'
@@ -26,7 +26,7 @@ export function StateBarStateContextWrapper({ children }: PropsWithChildren) {
   const $state = useStateIO<SideBarState>('disabled')
   useInspector('SideBarStateContext', $state.value)
   const error = useLoadedContext(SideBarErrorContext).value
-  const $$state: IO<SideBarState> = React.useMemo(
+  const $$state: IO<SideBarState> = useMemo(
     () =>
       error && $state.value !== 'error'
         ? {

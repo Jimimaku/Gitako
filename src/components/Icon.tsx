@@ -3,16 +3,15 @@ import {
   ChevronRightIcon as ChevronRight,
   ClockIcon as Clock,
   CommentIcon as Comment,
-  DiffAddedIcon as DiffAdded,
   DiffIcon as Diff,
+  DiffAddedIcon as DiffAdded,
   DiffIgnoredIcon as DiffIgnored,
   DiffModifiedIcon as DiffModified,
   DiffRemovedIcon as DiffRemoved,
   DiffRenamedIcon as DiffRenamed,
-  FileCodeIcon as FileCode,
   FileIcon as File,
+  FileCodeIcon as FileCode,
   FileMediaIcon as FileMedia,
-  FileSubmoduleIcon as Submodule,
   FileZipIcon as FileZip,
   GearIcon as Gear,
   GrabberIcon as Grabber,
@@ -22,10 +21,11 @@ import {
   PinIcon as Pin,
   ReplyIcon as Reply,
   SearchIcon as Search,
+  FileSubmoduleIcon as Submodule,
   TabIcon as Tab,
   XIcon as X,
 } from '@primer/octicons-react'
-import * as React from 'react'
+import React from 'react'
 import { cx } from 'utils/cx'
 
 const iconToComponentMap = {

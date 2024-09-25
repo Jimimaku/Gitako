@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, TextInput } from '@primer/react'
-import * as React from 'react'
+import React, { useMemo } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { cancelEvent } from 'utils/DOMHelper'
 import { friendlyFormatShortcut, noop } from 'utils/general'
@@ -15,7 +15,7 @@ export function KeyboardShortcutSetting({ label, value, onChange }: Props) {
   const $shortcut = useStateIO(value)
   useUpdateEffect(() => $shortcut.onChange(value), [value])
 
-  const id = React.useMemo(() => Math.random() + '', [])
+  const id = useMemo(() => Math.random() + '', [])
 
   return (
     <FormControl>

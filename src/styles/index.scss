@@ -40,12 +40,23 @@ $minimal-z-index: max(
   }
 }
 
-html[data-with-gitako-spacing='true'] {
-  body,
+html {
+  &[data-with-gitako-spacing='left'] {
+    body,
   .AppHeader deferred-side-panel div[data-modal-dialog-overlay] // side panel opened via clicking github top-left icon in global navigation mode
-  {
-    @media screen {
-      margin-left: var(--gitako-width);
+    {
+      @media screen {
+        margin-left: var(--gitako-width);
+      }
+    }
+  }
+
+  &[data-with-gitako-spacing='right'] {
+    body,
+    .AppHeader deferred-side-panel div[data-modal-dialog-overlay] {
+      @media screen {
+        margin-right: var(--gitako-width);
+      }
     }
   }
 }
@@ -72,13 +83,55 @@ html[data-with-gitako-spacing='true'] {
   z-index: $minimal-z-index;
   position: fixed;
   top: 124px; // align with GitHub's navbar items
-  left: 0px;
   display: inline-flex;
   align-items: center;
-  transition: left 0.25s linear;
+  transition: all 0.25s linear;
+  transition-property: left, right;
 
-  &.hidden {
-    left: -40px;
+  &.placement-left {
+    left: 0px;
+
+    &.hidden {
+      left: -40px;
+    }
+
+    .#{$name}-toggle-show-button {
+      left: -8px;
+
+      .tentacle {
+        transform: translateX(-8px);
+      }
+
+      &:active,
+      &:hover {
+        .tentacle {
+          transform: translateX(-4px);
+        }
+      }
+    }
+  }
+
+  &.placement-right {
+    right: 0;
+
+    &.hidden {
+      right: -40px;
+    }
+
+    .#{$name}-toggle-show-button {
+      left: 8px;
+
+      .tentacle {
+        transform: translateX(8px) scale(-1, 1);
+      }
+
+      &:active,
+      &:hover {
+        .tentacle {
+          transform: translateX(4px) scale(-1, 1);
+        }
+      }
+    }
   }
 
   .#{$name}-toggle-show-button {
@@ -87,7 +140,6 @@ html[data-with-gitako-spacing='true'] {
     border: none;
     padding: 0;
     position: relative;
-    left: -8px;
 
     &.error {
       cursor: not-allowed;
@@ -98,13 +150,11 @@ html[data-with-gitako-spacing='true'] {
       height: 40px;
       object-fit: contain;
       transition: all ease 0.4s;
-      transform: translateX(-8px);
       filter: drop-shadow(0 0 1px var(--color-primer-canvas-backdrop));
     }
     &:active,
     &:hover {
       .tentacle {
-        transform: translateX(-4px);
         filter: drop-shadow(0 0 2px var(--color-primer-canvas-backdrop));
       }
     }
@@ -136,10 +186,31 @@ html[data-with-gitako-spacing='true'] {
   .#{$name}-side-bar-body-wrapper {
     position: fixed;
     top: 0;
-    left: 0;
     height: 100vh;
     z-index: $minimal-z-index;
     display: flex;
+
+    &.placement-left {
+      left: 0;
+
+      &.toggle-mode-float {
+        left: 0;
+        &.collapsed {
+          left: calc(0px - #{$resizeHandlerWidth} - var(--gitako-width));
+        }
+      }
+    }
+
+    &.placement-right {
+      right: 0;
+
+      &.toggle-mode-float {
+        right: 0;
+        &.collapsed {
+          right: calc(0px - #{$resizeHandlerWidth} - var(--gitako-width));
+        }
+      }
+    }
 
     &.toggle-mode-persistent {
       &.collapsed {
@@ -148,11 +219,7 @@ html[data-with-gitako-spacing='true'] {
     }
 
     &.toggle-mode-float {
-      left: 0;
       transition: all 0.25s cubic-bezier(0.55, 0.06, 0.68, 0.19); // values from Chrome devtools
-      &.collapsed {
-        left: calc(0px - #{$resizeHandlerWidth} - var(--gitako-width));
-      }
     }
   }
   .#{$name}-resize-handler {

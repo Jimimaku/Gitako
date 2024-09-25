@@ -1,5 +1,5 @@
 import { useConfigs } from 'containers/ConfigsContext'
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import { isOpenInNewWindowClick } from 'utils/general'
 import { loadWithFastRedirect } from 'utils/hooks/useFastRedirect'
 import { AlignMode } from '../useVirtualScroll'
@@ -10,7 +10,7 @@ export function useHandleNodeClick(
   setAlignMode: (mode: AlignMode) => void,
 ) {
   const { recursiveToggleFolder } = useConfigs().value
-  return React.useCallback(
+  return useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>, node: TreeNode) => {
       setAlignMode('lazy')
       switch (node.type) {

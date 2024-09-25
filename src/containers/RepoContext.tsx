@@ -1,15 +1,15 @@
 import { PropsWithChildren } from 'common'
 import { useConfigs } from 'containers/ConfigsContext'
 import { platform } from 'platforms'
-import * as React from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAbortableEffect } from 'utils/hooks/useAbortableEffect'
 import { useEffectOnSerializableUpdates } from 'utils/hooks/useEffectOnSerializableUpdates'
 import { useAfterRedirect } from 'utils/hooks/useFastRedirect'
 import { useHandleNetworkError } from 'utils/hooks/useHandleNetworkError'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
 import { useStateIO } from 'utils/hooks/useStateIO'
-import { SideBarStateContext } from './SideBarState'
 import { useInspector } from './Inspector'
+import { SideBarStateContext } from './SideBarState'
 
 export const RepoContext = React.createContext<MetaData | null>(null)
 
@@ -18,7 +18,7 @@ export function RepoContextWrapper({ children }: PropsWithChildren) {
   const metaData = useMetaData(partialMetaData)
   useInspector(
     'RepoContext',
-    React.useMemo(
+    useMemo(
       () => ({
         partialMetaData,
         metaData,
@@ -54,11 +54,11 @@ function usePartialMetaData(): PartialMetaData | null {
   // sync along URL and DOM
   const $partialMetaData = useStateIO(isGettingAccessToken ? null : resolvePartialMetaData)
   const $committedPartialMetaData = useStateIO($partialMetaData.value)
-  const setPartialMetaData = React.useCallback(
+  const setPartialMetaData = useCallback(
     () => $partialMetaData.onChange(resolvePartialMetaData()),
     [], // eslint-disable-line react-hooks/exhaustive-deps
   )
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isGettingAccessToken) setPartialMetaData()
   }, [isGettingAccessToken, setPartialMetaData])
   useAfterRedirect(setPartialMetaData)
@@ -67,7 +67,7 @@ function usePartialMetaData(): PartialMetaData | null {
     JSON.stringify,
     $committedPartialMetaData.onChange,
   )
-  React.useEffect(() => {
+  useEffect(() => {
     if (!$partialMetaData.value && !isGettingAccessToken) {
       $state.onChange('disabled')
     }
@@ -76,12 +76,12 @@ function usePartialMetaData(): PartialMetaData | null {
 }
 
 function useMetaData(partialMetaData: PartialMetaData | null) {
-  const [metaData, changeMetaData] = React.useState<MetaData | null>(null)
+  const [metaData, changeMetaData] = useState<MetaData | null>(null)
   const changeLoadedState = useLoadedContext(SideBarStateContext).onChange
   const handleNetworkError = useHandleNetworkError()
 
   const { accessToken } = useConfigs().value
-  const loadRepoMetaData = React.useCallback(
+  const loadRepoMetaData = useCallback(
     async function* loadRepoMetaData() {
       if (!partialMetaData) return
 
@@ -115,7 +115,7 @@ function useMetaData(partialMetaData: PartialMetaData | null) {
   )
 
   useAbortableEffect(
-    React.useCallback(
+    useCallback(
       () => ({
         getAsyncGenerator: loadRepoMetaData,
         cancel: () => {

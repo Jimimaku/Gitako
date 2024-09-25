@@ -2,7 +2,7 @@ import primitives from '@primer/primitives'
 import { BaseStyles, ThemeProvider } from '@primer/react'
 import theme from '@primer/react/lib-esm/theme'
 import { PropsWithChildren } from 'common'
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Temporary color fix for out-of-date embedded @primer/primitives in @primer/react
 // The `*_tritanopia` themes are actually not bundled within @primer/react@35.2.2
@@ -17,7 +17,7 @@ const fixedTheme = {
 }
 
 const validColorSchemes = Object.keys(fixedTheme.colorSchemes) as EnumString<
-  keyof typeof primitives['colors']
+  keyof (typeof primitives)['colors']
 >[]
 
 const colorModeMap: Record<string, 'night' | 'day'> = {
@@ -39,8 +39,8 @@ const getPreferenceFromDOM = () => {
 }
 
 function useThemePreference() {
-  const [prefer, setPrefer] = React.useState(getPreferenceFromDOM)
-  React.useEffect(() => {
+  const [prefer, setPrefer] = useState(getPreferenceFromDOM)
+  useEffect(() => {
     const match = window.matchMedia('(prefers-color-scheme: dark)')
     const update = () => setPrefer(getPreferenceFromDOM)
     match.addEventListener('change', update)

@@ -1,6 +1,6 @@
 import { raiseError } from 'analytics'
 import { Clippy, ClippyClassName } from 'components/Clippy'
-import * as React from 'react'
+import React from 'react'
 import { $ } from 'utils/$'
 import { formatClass } from 'utils/DOMHelper'
 import { renderReact } from 'utils/general'

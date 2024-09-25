@@ -1,6 +1,6 @@
 import { useConfigs } from 'containers/ConfigsContext'
 import { platform } from 'platforms'
-import * as React from 'react'
+import React, { useMemo, useRef } from 'react'
 import { cx } from 'utils/cx'
 import { cancelEvent } from 'utils/DOMHelper'
 import { getFileIconURL, getFolderIconURL } from 'utils/parseIconMapCSV'
@@ -43,7 +43,7 @@ export const Node = React.memo(function Node({
   onFocus,
 }: Props) {
   const { compactFileTree: compact } = useConfigs().value
-  const ref = React.useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   return (
     <a
       href={node.url}
@@ -87,11 +87,11 @@ const NodeItemIcon = React.memo(function NodeItemIcon({
 }) {
   const { icons } = useConfigs().value
 
-  const src = React.useMemo(
+  const src = useMemo(
     () => (node.type === 'tree' ? getFolderIconURL(node, open) : getFileIconURL(node)),
     [node, open],
   )
-  const iconType = React.useMemo(() => getIconType(node), [node])
+  const iconType = useMemo(() => getIconType(node), [node])
 
   if (icons === 'native') return <Icon type={iconType} />
   return (

@@ -2,7 +2,7 @@ import { useConfigs } from 'containers/ConfigsContext'
 import { GITHUB_OAUTH } from 'env'
 import { platform } from 'platforms'
 import { GitHub } from 'platforms/GitHub'
-import * as React from 'react'
+import React from 'react'
 
 export function AccessDeniedDescription() {
   const { accessToken } = useConfigs().value

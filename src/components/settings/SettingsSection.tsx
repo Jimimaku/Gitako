@@ -1,5 +1,5 @@
 import { Box } from '@primer/react'
-import * as React from 'react'
+import React from 'react'
 
 type Props = {
   title?: React.ReactNode

@@ -1,8 +1,36 @@
 @mixin github($github-content-width) {
-  [data-gitako-platform='GitHub'] {
-    @media (min-width: $github-content-width) {
+  @media (min-width: $github-content-width) {
+    [data-gitako-platform='GitHub'] {
       body {
         min-width: $github-content-width;
+      }
+
+      #files-bucket,
+      .files-bucket {
+        & > .position-relative.px-4 {
+          width: unset !important;
+          left: unset !important;
+          right: unset !important;
+          margin-left: unset !important;
+          margin-right: unset !important;
+        }
+      }
+
+      &[data-with-gitako-spacing='right'] {
+        body {
+          min-width: auto; // it will break layout when too narrow, but at least it makes everything visible
+
+          .container-xl {
+            margin-left: max(
+              0,
+              calc((100vw - 1280px - var(--gitako-width)) / 2)
+            ); // override margin-left: auto;
+            margin-right: max(
+              0,
+              calc((100vw - 1280px - var(--gitako-width)) / 2)
+            ); // override margin-right: auto;
+          }
+        }
       }
     }
   }

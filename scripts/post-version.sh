@@ -9,7 +9,7 @@ version=$(node scripts/get-version.js)
 git tag -d v$version
 
 # update Safari version
-make version-safari
+sed -i '' -E 's/MARKETING_VERSION = .*;/MARKETING_VERSION = $(RAW_VERSION);/' Safari/Gitako/Gitako.xcodeproj/project.pbxproj
 
 # merge to previous git
 git add .

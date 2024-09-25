@@ -1,5 +1,5 @@
-import addPermissionToggle from 'webext-permission-toggle'
 import 'webext-dynamic-content-scripts'
+import addPermissionToggle from 'webext-permission-toggle'
 
 addPermissionToggle({
   title: 'Enable Gitako on this domain',

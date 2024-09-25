@@ -22,6 +22,7 @@ export type Config = {
   restoreExpandedFolders: boolean
   pjaxMode: 'native' | 'pjax-api'
   showDiffInText: boolean
+  sidebarPlacement: 'left' | 'right'
   __showInspector?: boolean
 }
 
@@ -46,6 +47,7 @@ enum configKeys {
   restoreExpandedFolders = 'restoreExpandedFolders',
   pjaxMode = 'pjaxMode',
   showDiffInText = 'showDiffInText',
+  sidebarPlacement = 'sidebarPlacement',
   __showInspector = '__showInspector',
 }
 
@@ -72,6 +74,7 @@ export const getDefaultConfigs: () => Config = () => ({
   restoreExpandedFolders: true,
   pjaxMode: platformName === 'GitHub' ? 'native' : 'pjax-api', // use native on GitHub
   showDiffInText: false,
+  sidebarPlacement: 'left',
 })
 
 const configKeyArray = Object.values(configKeys)

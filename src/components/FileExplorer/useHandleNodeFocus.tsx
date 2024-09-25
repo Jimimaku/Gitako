@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import { VisibleNodesGeneratorMethods } from './hooks/useVisibleNodesGeneratorMethods'
 import { AlignMode } from './useVirtualScroll'
 
@@ -6,7 +6,7 @@ export function useHandleNodeFocus(
   { focusNode }: VisibleNodesGeneratorMethods,
   setAlignMode: (mode: AlignMode) => void,
 ) {
-  return React.useCallback(
+  return useCallback(
     (event: React.FocusEvent<HTMLElement, Element>, node: TreeNode) => {
       setAlignMode('lazy')
       focusNode(node)

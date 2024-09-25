@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect } from 'react'
 import { useLoadedContext } from 'utils/hooks/useLoadedContext'
 import * as keyHelper from 'utils/keyHelper'
 import { SideBarStateContext } from '../../containers/SideBarState'
@@ -9,7 +9,7 @@ export function useOnShortcutPressed(
 ) {
   const state = useLoadedContext(SideBarStateContext).value
   const isDisabled = state === 'disabled' || !shortcut
-  React.useEffect(
+  useEffect(
     function attachKeyDown() {
       if (isDisabled) return
 

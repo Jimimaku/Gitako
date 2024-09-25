@@ -8,7 +8,7 @@ import { ActionList, AnchoredOverlay } from '@primer/react'
 import { useConfigs } from 'containers/ConfigsContext'
 import { PortalContext } from 'containers/PortalContext'
 import { platform } from 'platforms'
-import * as React from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { useCopyToClipboard } from 'react-use'
 import { cx } from 'utils/cx'
 import { cancelEvent, onEnterKeyDown } from 'utils/DOMHelper'
@@ -22,7 +22,7 @@ import { VisibleNodesGeneratorMethods } from './useVisibleNodesGeneratorMethods'
 export type NodeRenderer = (node: TreeNode) => React.ReactNode
 
 export function useNodeRenderers(allRenderers: (NodeRenderer | null | undefined)[]) {
-  return React.useMemo(() => {
+  return useMemo(() => {
     const renderers: NodeRenderer[] = allRenderers.filter(is.not.nil)
     return renderers.length
       ? (node: TreeNode) =>
@@ -33,7 +33,7 @@ export function useNodeRenderers(allRenderers: (NodeRenderer | null | undefined)
 
 export function useRenderFileStatus() {
   const { showDiffInText } = useConfigs().value
-  return React.useCallback(
+  return useCallback(
     function renderFileStatus({ diff }: TreeNode) {
       return (
         diff && (
@@ -64,10 +64,10 @@ function NodeContextMenu({
   node: TreeNode
   visibleNodesGeneratorMethods: VisibleNodesGeneratorMethods
 }) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [copied, setCopied] = React.useState<string | null>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [copied, setCopied] = useState<string | null>(null)
   const [copyState, copyToClipboard] = useCopyToClipboard()
-  const portalName = React.useContext(PortalContext)
+  const portalName = useContext(PortalContext)
   const actionElements = {
     copyPermalink:
       node.permalink &&
@@ -233,14 +233,14 @@ export function useRenderFileCommentAmounts() {
     ) : null
   }
   const { commentToggle } = useConfigs().value
-  return React.useMemo(() => (commentToggle ? renderFileCommentAmounts : null), [commentToggle])
+  return useMemo(() => (commentToggle ? renderFileCommentAmounts : null), [commentToggle])
 }
 
 export function useRenderFindInFolderButton(
   onSearch: (searchKey: string, searchMode: SearchMode) => void,
 ) {
   const { searchMode } = useConfigs().value
-  return React.useMemo(
+  return useMemo(
     () =>
       searchMode === 'fuzzy'
         ? function renderFindInFolderButton(node: TreeNode) {
@@ -260,7 +260,7 @@ export function useRenderFindInFolderButton(
 }
 
 export function useRenderGoToButton(searched: boolean, goTo: (path: string[]) => void) {
-  return React.useMemo(
+  return useMemo(
     () =>
       searched
         ? function renderGoToButton(node: TreeNode): React.ReactNode {

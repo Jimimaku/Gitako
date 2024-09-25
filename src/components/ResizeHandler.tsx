@@ -1,19 +1,19 @@
 import { GrabberIcon } from '@primer/octicons-react'
 import { Icon } from 'components/Icon'
-import * as React from 'react'
-import { ResizeState, useResizeHandler } from '../utils/hooks/useResizeHandler'
+import React from 'react'
+import { ResizeHandlerOptions, useResizeHandler } from '../utils/hooks/useResizeHandler'
 import { Size2D } from './Size'
 
 type Props = {
   size: Size2D
   onResize(size: Size2D): void
   onResetSize?(): void
-  onResizeStateChange?(state: ResizeState): void
+  options?: ResizeHandlerOptions
   style?: React.CSSProperties
 }
 
-export function ResizeHandler({ onResize, onResetSize, onResizeStateChange, size, style }: Props) {
-  const { onPointerDown } = useResizeHandler(size, onResize, { onResizeStateChange })
+export function ResizeHandler({ onResize, onResetSize, options, size, style }: Props) {
+  const { onPointerDown } = useResizeHandler(size, onResize, options)
 
   return (
     <div

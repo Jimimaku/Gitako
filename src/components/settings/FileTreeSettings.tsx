@@ -1,6 +1,6 @@
 import { wikiLinks } from 'components/settings/SettingsBar'
 import { SimpleConfigFieldCheckbox } from 'components/settings/SimpleConfigField/Checkbox'
-import * as React from 'react'
+import React from 'react'
 import { Config } from 'utils/config/helper'
 import { Option } from '../Inputs/SelectInput'
 import { SettingsSection } from './SettingsSection'

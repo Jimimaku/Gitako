@@ -1,5 +1,5 @@
 import * as NProgress from 'nprogress'
-import * as React from 'react'
+import { useEffect } from 'react'
 import { useEvent } from 'react-use'
 
 const progressBar = {
@@ -12,7 +12,7 @@ const progressBar = {
 }
 
 export function useProgressBar() {
-  React.useEffect(() => {
+  useEffect(() => {
     NProgress.configure({ showSpinner: false })
   }, [])
   useEvent('pjax:fetch', progressBar.mount, window)

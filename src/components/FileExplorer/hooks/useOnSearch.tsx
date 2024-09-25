@@ -1,5 +1,5 @@
 import { useConfigs } from 'containers/ConfigsContext'
-import * as React from 'react'
+import { useCallback } from 'react'
 import { VisibleNodesGenerator } from 'utils/VisibleNodesGenerator'
 import { SearchMode, searchModes } from '../../searchModes'
 
@@ -8,7 +8,7 @@ export function useOnSearch(
   visibleNodesGenerator: VisibleNodesGenerator,
 ) {
   const { restoreExpandedFolders } = useConfigs().value
-  return React.useCallback(
+  return useCallback(
     (searchKey: string, searchMode: SearchMode) => {
       updateSearchKey(searchKey)
       visibleNodesGenerator.search(

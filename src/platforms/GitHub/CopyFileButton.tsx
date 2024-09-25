@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { cx } from 'utils/cx'
 import { copyElementContent } from 'utils/DOMHelper'
 import { getCodeElement } from './DOMHelper'
@@ -13,8 +13,8 @@ const contents = {
 }
 
 export function CopyFileButton() {
-  const [content, setContent] = React.useState(contents.normal)
-  React.useEffect(() => {
+  const [content, setContent] = useState(contents.normal)
+  useEffect(() => {
     if (content !== contents.normal) {
       const timer = setTimeout(() => {
         setContent(contents.normal)
@@ -23,8 +23,8 @@ export function CopyFileButton() {
     }
   }, [content])
 
-  const elementRef = React.useRef<HTMLAnchorElement | null>(null)
-  React.useEffect(() => {
+  const elementRef = useRef<HTMLAnchorElement | null>(null)
+  useEffect(() => {
     // Temporary fix:
     // React moved root node of event delegation since v17
     // onClick on <a /> won't work when rendered with `renderReact`
