@@ -42,7 +42,7 @@
     "superstruct": "^1.0.3",
     "webext-dynamic-content-scripts": "^10.0.1",
     "webext-permission-toggle": "^5.0.2",
-    "webextension-polyfill": "^0.11.0"
+    "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
